@@ -1,4 +1,4 @@
-# UNet Tensorflow v2.1 Implementation
+# UNet Tensorflow v2.2 Implementation
 
 The code presented here is a Tensorflow v2.2 implementation of the original UNet model proposed in [Ronneberger et al. (2015)](http://lmb.informatik.uni-freiburg.de/).
 
