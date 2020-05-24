@@ -36,10 +36,12 @@ net.process_val(val_im, val_seg)
 # LOGGING
 log_dir = 'logs/fit/' + datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1, write_graph=True, update_freq='batch')
-callbacks = [tensorboard_callback]
+callbacks = []  # [tensorboard_callback]
 
 # FIT
-net.fit(batch=5, prefetch=5, repeat=50, epochs=5, callbacks=callbacks)
+# net.fit(batch=5, prefetch=5, repeat=5, epochs=2, callbacks=callbacks)
+net.fit(net.trainset.shuffle(5).batch(5).repeat(), epochs=1,
+        validation_data=net.valset.batch(5))
 
 # SAVE THE MODEL
 os.mkdir('saved_model')

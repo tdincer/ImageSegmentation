@@ -176,6 +176,10 @@ class UNet:
         self.valset = self.valset.map(self.normalize, num_parallel_calls=self.autotune)
         self.valset = self.valset.map(self.one_hot_label, num_parallel_calls=self.autotune)
 
-    def fit(self, batch, prefetch, repeat, epochs, callbacks):
-        self.model.fit(self.trainset.batch(batch).prefetch(prefetch).repeat(repeat),
-                       validation_data=self.valset.batch(batch), epochs=epochs, callbacks=callbacks)
+    def fit(self, trainset, validation_data, steps_per_epoch=100, epochs=1, callbacks=[]):
+        self.model.fit(trainset, steps_per_epoch=steps_per_epoch, epochs=epochs, callbacks=callbacks,
+                       validation_data=validation_data)
+
+    # def fit(self, batch, prefetch, repeat, epochs, callbacks):
+    #     self.model.fit(self.trainset.batch(batch).prefetch(prefetch).repeat(repeat),
+    #                    validation_data=self.valset.batch(batch), epochs=epochs, callbacks=callbacks)

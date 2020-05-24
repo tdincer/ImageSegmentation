@@ -4,6 +4,8 @@ Image segmentation model is an implementation of UNet ([Ronneberger2015](http://
 Tensorflow v2.2. The network can be trained to perform image segmentation on arbitrary imaging data. Check out the
 Jupyter notebook for the usage.
 
+
+
 ## Features
 
 Data is pipelined to the model with Tensorflow Data (tf.data) API.
