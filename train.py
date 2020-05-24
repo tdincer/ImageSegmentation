@@ -26,7 +26,7 @@ seq = iaa.Sequential([
     iaa.ElasticTransformation(alpha=10, sigma=3),
 ])
 
-# CONNECT EVERYTHING & FIT
+# CONNECT EVERYTHING
 net = unet.UNet(IMG_WIDTH, IMG_HEIGHT, OUTPUT_CHANNELS)
 net.get_unet()
 net.set_seq(seq)

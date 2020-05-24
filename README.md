@@ -1,19 +1,11 @@
-# Image Segmentation Model
+# UNet Tensorflow v2.1 Implementation
 
-Image segmentation model is an implementation of UNet ([Ronneberger2015](http://lmb.informatik.uni-freiburg.de/)) using
-Tensorflow v2.2. The network can be trained to perform image segmentation on arbitrary imaging data. Check out the
-Jupyter notebook for the usage.
+The code presented here is a Tensorflow v2.1 implementation of the original UNet model proposed in [Ronneberger2015](http://lmb.informatik.uni-freiburg.de/).
 
+In this code, the model takes input from a Tensorflow input pipeline, which allows processing image augmentation via the awesome [imgaug](https://github.com/aleju/imgaug) library.
 
+This code can be trained on arbitrary imaging data. Check out the Jupyter notebook for the usage.
 
-## Features
-
-Data is pipelined to the model with Tensorflow Data (tf.data) API.
-
-Image augmentatiton is available with [imgaug](https://github.com/aleju/imgaug).
-
-## Model
-The model is a fully convolutional network; therefore the shape of the input images is not predefined. The output layer is activated with a sigmoid in the case of a binary label and with a softmax in the case of multiple label. In the former, the default loss function is a binary cross entropy.
 
 ## Results
 
@@ -26,7 +18,3 @@ The model is a fully convolutional network; therefore the shape of the input ima
 - scipy
 - skimage
 - matplotlib
-
-
-### TODO:
-  At some point between image resizing or augmentatation, the input image is getting out of 0-1 range.

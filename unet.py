@@ -17,6 +17,10 @@ class UNet:
         self.valset = None
         self.autotune = autotune
         self.seq = None
+        self.experiment_name = None
+
+    def init(self, experiment_name='awesome_project'):
+        self.experiment_name = experiment_name
 
     @staticmethod
     def conv2d_block(input_tensor, filters, kernel_size=(3, 3), padding='valid', batch_norm=True):
