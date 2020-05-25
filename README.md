@@ -17,4 +17,4 @@ This code can be trained on arbitrary imaging data. Check out the Jupyter notebo
 ## Results
 Here is a result obtained from a test image (unseen image during the training):
 
-![](./Result.eps)
+![](./Result.jpg)
