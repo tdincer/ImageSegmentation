@@ -23,4 +23,4 @@ Here is an example prediction of the model on a test data:
 
 ![Unseen image during the training](./Result.jpg)
 
-The prediction is not perfect but acceptable. It can be improved by better training the model.
+The prediction is not perfect but acceptable. It can be improved with a better training of the model.
