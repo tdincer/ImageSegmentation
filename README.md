@@ -15,6 +15,6 @@ This code can be trained on arbitrary imaging data. Check out the Jupyter notebo
 - matplotlib
 
 ## Results
-Here is a result obtained from a test image (unseen image during the training):
+Here is a prediction of the model on the test data:
 
-![](./Result.jpg)
+![Unseen image during the training](./Result.jpg)
