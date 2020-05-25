@@ -128,7 +128,7 @@ def plot_input_prediction(inp, pred, file_name=None, colorbars=False, title=None
     fig, (ax1, ax2) = plt.subplots(1, 2)
     x1 = ax1.imshow(inp)
     x2 = ax2.imshow(pred)
-    ax1.set_title('Input')
+    ax1.set_title('Test Image')
     ax2.set_title('Prediction')
 
     if title is not None:
