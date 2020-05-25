@@ -141,4 +141,4 @@ def plot_input_prediction(inp, pred, file_name=None, colorbars=False, title=None
     if file_name is None:
         plt.show()
     else:
-        plt.savefig(file_name)
+        plt.savefig(file_name, bbox_inches='tight')
