@@ -13,3 +13,7 @@ This code can be trained on arbitrary imaging data. Check out the Jupyter notebo
 - scipy
 - skimage
 - matplotlib
+
+## Results
+Here is a result obtained from a test image (unseen image during the training):
+![Test Data](Results.eps)

@@ -2,6 +2,7 @@ import tensorflow as tf
 from glob import glob
 import numpy as np
 from skimage.segmentation import find_boundaries
+import matplotlib.pyplot as plt
 
 
 def colorbar(mappable):
@@ -120,5 +121,24 @@ def make_weight_map(masks):
     return ZZ
 
 
-def load_data(img_folder, seg_folder):
-    pass
+def plot_input_prediction(inp, pred, file_name=None, colorbars=False, title=None):
+    inp = inp.numpy().reshape(inp.shape[-3:-1])
+    pred = tf.argmax(pred, -1).numpy().reshape(pred.shape[-3:-1])
+
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+    x1 = ax1.imshow(inp)
+    x2 = ax2.imshow(pred)
+    ax1.set_title('Input')
+    ax2.set_title('Prediction')
+
+    if title is not None:
+        fig.suptitle(title)
+
+    if colorbars:
+        colorbar(x1)
+        colorbar(x2)
+
+    if file_name is None:
+        plt.show()
+    else:
+        plt.savefig(file_name)

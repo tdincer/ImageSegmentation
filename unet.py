@@ -3,6 +3,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras import backend as keras_backend
 from tensorflow.keras.layers import (Input, Conv2D, Activation, BatchNormalization, Dropout, MaxPooling2D,
                                      UpSampling2D, Cropping2D, concatenate)
+from tensorflow.keras.models import load_model
 from imgaug.augmentables.segmaps import SegmentationMapsOnImage
 
 
@@ -15,6 +16,7 @@ class UNet:
         self.imheight = imheight
         self.trainset = None
         self.valset = None
+        self.testset = None
         self.autotune = autotune
         self.seq = None
         self.experiment_name = None
@@ -128,7 +130,7 @@ class UNet:
         img = tf.cast(tf.round(img), tf.uint8)
         return img
 
-    def process_path(self, img_path, seg_path):
+    def process_path_double(self, img_path, seg_path):
         # load the raw data from the file as a string
         img = tf.io.read_file(img_path)
         img = self.decode_img(img)
@@ -136,6 +138,11 @@ class UNet:
         seg = self.decode_img(seg)
         # seg = tf.round(seg)
         return img, seg
+
+    def process_path_single(self, img_path):
+        img = tf.io.read_file(img_path)
+        img = self.decode_img(img)
+        return img
 
     def augment_batch(self, image, segmap):
         def augment_image(img, seg):
@@ -159,30 +166,47 @@ class UNet:
         seg = tf.squeeze(seg, -2)
         return img, seg
 
-    def normalize(self, img, seg):
+    def normalize_double(self, img, seg):
         img = img / 255
         seg = seg / 255
         return img, seg
+
+    def normalize_single(self, img):
+        return img / 255
 
     def set_seq(self, seq):
         self.seq = seq
 
     def process_train(self, im, seg):
         self.trainset = tf.data.Dataset.from_tensor_slices((im, seg))
-        self.trainset = self.trainset.map(self.process_path, num_parallel_calls=self.autotune)
+        self.trainset = self.trainset.map(self.process_path_double, num_parallel_calls=self.autotune)
         self.trainset = self.trainset.map(self.augment_batch, num_parallel_calls=self.autotune)
-        self.trainset = self.trainset.map(self.normalize, num_parallel_calls=self.autotune)
+        self.trainset = self.trainset.map(self.normalize_double, num_parallel_calls=self.autotune)
         self.trainset = self.trainset.map(self.one_hot_label, num_parallel_calls=self.autotune)
 
     def process_val(self, im, seg):
         self.valset = tf.data.Dataset.from_tensor_slices((im, seg))
-        self.valset = self.valset.map(self.process_path, num_parallel_calls=self.autotune)
-        self.valset = self.valset.map(self.normalize, num_parallel_calls=self.autotune)
+        self.valset = self.valset.map(self.process_path_double, num_parallel_calls=self.autotune)
+        self.valset = self.valset.map(self.normalize_double, num_parallel_calls=self.autotune)
         self.valset = self.valset.map(self.one_hot_label, num_parallel_calls=self.autotune)
 
     def fit(self, trainset, validation_data, steps_per_epoch=100, epochs=1, callbacks=[]):
         self.model.fit(trainset, steps_per_epoch=steps_per_epoch, epochs=epochs, callbacks=callbacks,
                        validation_data=validation_data)
+
+    def load_model(self, file_path):
+        self.model = load_model(file_path)
+        self.imheight = self.model.input_shape[-3]
+        self.imwidth = self.model.input_shape[-2]
+        self.output_channels = self.model.output_shape[-1]
+        self.autotune = -1
+
+    def load_testset(self, im):
+        if not isinstance(im, list):
+            im = [im]
+        self.testset = tf.data.Dataset.from_tensor_slices(im)
+        self.testset = self.testset.map(self.process_path_single, num_parallel_calls=self.autotune)
+        self.testset = self.testset.map(self.normalize_single, num_parallel_calls=self.autotune)
 
     # def fit(self, batch, prefetch, repeat, epochs, callbacks):
     #     self.model.fit(self.trainset.batch(batch).prefetch(prefetch).repeat(repeat),

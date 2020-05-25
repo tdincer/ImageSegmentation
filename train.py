@@ -3,9 +3,7 @@ import unet
 import imgaug.augmenters as iaa
 from datetime import datetime
 from tensorflow.keras.callbacks import TensorBoard
-import numpy as np
-import matplotlib.pyplot as plt
-from utils import colorbar, assign_paths
+from utils import assign_paths
 
 # INPUT CHARACTERISTICS
 OUTPUT_CHANNELS = 2
@@ -46,21 +44,3 @@ net.fit(net.trainset.shuffle(5).batch(5).repeat(), epochs=1,
 # SAVE THE MODEL
 os.mkdir('saved_model')
 net.model.save('saved_model/unet_trained')
-
-
-# INFERENCE AND FIGURES
-img, seg = next(iter(net.valset.shuffle(5).take(1)))
-res = net.model.predict(img.numpy().reshape(1, IMG_WIDTH, IMG_HEIGHT, 1))
-
-
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
-x1 = ax1.imshow(img.numpy().reshape(IMG_WIDTH, IMG_HEIGHT))
-colorbar(x1)
-x2 = ax2.imshow(np.argmax(seg, -1).reshape(IMG_WIDTH, IMG_HEIGHT))
-colorbar(x2)
-x3 = ax3.imshow(np.argmax(res, -1).reshape(IMG_WIDTH, IMG_HEIGHT))
-colorbar(x3)
-ax1.set_title('Image')
-ax2.set_title('Ground Truth')
-ax3.set_title('Prediction')
-plt.show()
