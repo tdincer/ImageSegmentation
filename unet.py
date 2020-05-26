@@ -123,9 +123,6 @@ class UNet:
     def decode_img(self, img):
         # convert the compressed string to a 1D uint8 tensor
         img = tf.image.decode_png(img, channels=1)
-        # Use `convert_image_dtype` to convert to floats in the [0,1] range.
-        # img = tf.image.convert_image_dtype(img, tf.float32)
-        # resize the image to the desired size.
         img = tf.image.resize(img, [self.imwidth, self.imheight], method='bilinear')
         img = tf.cast(tf.round(img), tf.uint8)
         return img

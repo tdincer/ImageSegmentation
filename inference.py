@@ -14,4 +14,4 @@ net.load_testset(test_file)
 img = next(iter(net.testset.take(1)))
 res = net.model.predict(img.numpy().reshape(1, net.imwidth, net.imheight, 1))
 
-plot_input_prediction(img, res, 'Result.eps')
+plot_input_prediction(img, res, 'Result.jpg')

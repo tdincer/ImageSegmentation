@@ -13,7 +13,7 @@ In this implementation, the UNet model takes input from a Tensorflow input pipel
 - matplotlib
 
 ## Training
-This code can be trained on arbitrary imaging data. The main parameters of the model, pipelining the images to the model, and the image augmentation pipeline can be easily modified in the train.py file.
+The model can be trained on arbitrary imaging data. The main parameters of the model, pipelining the images to the model, and the image augmentation can be easily modified in the train.py file.
 
 ## Inference
 After the training, the model is saved as an h5 file to be used for inference within the inference.py file.

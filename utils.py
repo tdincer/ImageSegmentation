@@ -35,8 +35,6 @@ def process_path(img_path, seg_path):
     seg = tf.io.read_file(seg_path)
     seg = decode_img(seg)
     seg = tf.round(seg)
-    # TODO: Remove the following line. To do this train_mask files should be corrected.
-    seg = tf.image.rot90(seg, k=1, name=None)  # This is only for the test data.
     return img, seg
 
 
