@@ -25,7 +25,7 @@ The model can be trained on arbitrary imaging data. The main parameters of the m
 After the training, the model is saved as an h5 file to be used for inference within the inference.py file.
 
 ## Results
-Here is an example prediction of the model on a test data:
+Here is a prediction of the model on a test data:
 
 ![Unseen image during the training](./Result.jpg)
 
@@ -47,7 +47,7 @@ Model Training:
     IMG_HEIGHT = 128
     OUTPUT_CHANNELS = 128
 
-    # the paths to train and validation data
+    # paths to train and validation data
     train_im, train_seg, val_im, val_seg = assign_paths(train_im_folder, file_format='.png', split_no=5)
     
     # define an augmenter
