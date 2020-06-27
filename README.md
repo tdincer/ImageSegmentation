@@ -29,7 +29,7 @@ Here is a prediction of the model on a test data:
 
 ![Unseen image during the training](./Result.jpg)
 
-The prediction is not perfect but acceptable. It can be improved with a better training of the model.
+The prediction is not perfect but acceptable. It can be improved with a better training strategy.
 
 
 ### Quick Start
